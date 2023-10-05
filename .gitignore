@@ -29,3 +29,5 @@ vendor/
 
 #Binaries folder
 binaries/
+go-vue-check
+report.html

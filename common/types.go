@@ -1,4 +1,4 @@
-package define_api
+package common
 
 type APICounter struct {
 	OptionsAPI         int     `json:"OptionsAPI"`
@@ -7,3 +7,10 @@ type APICounter struct {
 	CompositionPercent float64 `json:"CompositionPercent"`
 	TotalFiles         int     `json:"TotalFiles"`
 }
+
+type ReportRow struct {
+	FileName string `json:"FileName"`
+	APIType  string `json:"APIType"`
+}
+
+var ReportList []ReportRow

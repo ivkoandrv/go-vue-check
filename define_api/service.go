@@ -2,18 +2,19 @@ package define_api
 
 import (
 	"fmt"
+	"go-vue-check/common"
 	"path/filepath"
 )
 
-func StartDefineAPI(projectSrcPath string) func() *APICounter {
+func StartDefineAPI(projectSrcPath string, isGenerate bool) func() *common.APICounter {
 
 	fmt.Printf("Source Directory: %s\n", projectSrcPath)
 
 	viewsFolderPath := filepath.Join(projectSrcPath, "views")
 	componentsFolderPath := filepath.Join(projectSrcPath, "components")
 
-	viewsCounter := ScanFilesWithVueExtension(viewsFolderPath)
-	componentsCounter := ScanFilesWithVueExtension(componentsFolderPath)
+	viewsCounter := ScanFilesWithVueExtension(viewsFolderPath, isGenerate)
+	componentsCounter := ScanFilesWithVueExtension(componentsFolderPath, isGenerate)
 
 	viewsCounter.OptionsAPI += componentsCounter.OptionsAPI
 	viewsCounter.CompositionAPI += componentsCounter.CompositionAPI
@@ -31,7 +32,7 @@ func StartDefineAPI(projectSrcPath string) func() *APICounter {
 	fmt.Printf("Options API Percentage: %.2f%%\n", viewsCounter.OptionsPercent)
 	fmt.Printf("Composition API Percentage: %.2f%%\n", viewsCounter.CompositionPercent)
 
-	return func() *APICounter {
+	return func() *common.APICounter {
 		return viewsCounter
 	}
 }

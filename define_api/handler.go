@@ -2,14 +2,16 @@ package define_api
 
 import (
 	"fmt"
+	"go-vue-check/common"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
 )
 
-func ScanFilesWithVueExtension(rootPath string) *APICounter {
-	counter := &APICounter{}
+func ScanFilesWithVueExtension(rootPath string, isGenerate bool) *common.APICounter {
+	counter := &common.APICounter{}
+	//reportList := reports.ReportList
 
 	walkFn := func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -25,8 +27,31 @@ func ScanFilesWithVueExtension(rootPath string) *APICounter {
 				switch fileSrc {
 				case "Options API", "Options API (TypeScript)":
 					counter.OptionsAPI++
+
+					if isGenerate {
+
+						optionsRow := common.ReportRow{
+							FileName: path,
+							APIType:  "Options API",
+						}
+
+						//fmt.Println(optionsRow)
+						common.ReportList = append(common.ReportList, optionsRow)
+
+					}
 				case "Composition API (Script Setup)", "Composition API (TypeScript with Script Setup)":
 					counter.CompositionAPI++
+
+					if isGenerate {
+						compositionRow := common.ReportRow{
+							FileName: path,
+							APIType:  "Composition API",
+						}
+
+						//fmt.Println(compositionRow)
+						common.ReportList = append(common.ReportList, compositionRow)
+
+					}
 				}
 				counter.TotalFiles++
 			}
@@ -38,6 +63,12 @@ func ScanFilesWithVueExtension(rootPath string) *APICounter {
 	err := filepath.Walk(rootPath, walkFn)
 	if err != nil {
 		fmt.Println("Error walking through directories: ", err)
+	}
+
+	if isGenerate {
+
+		fmt.Print("REPORT ARR LENGTH")
+		fmt.Print(len(common.ReportList))
 	}
 
 	return counter

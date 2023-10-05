@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Report API</title>
+</head>
+<body>
+<h1>Report</h1>
+
+<div>
+    <h4>Show stats here</h4>
+
+    <br />
+
+    <span>Composition API: {{.Counter.CompositionAPI}} ({{.Counter.CompositionPercent}})</span><br>
+    <span>Options API: {{.Counter.CompositionAPI}} ({{.Counter.OptionsPercent}})</span><br>
+    <span>Total Files: {{.Counter.TotalFiles}}</span><br>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>File Name</th>
+        <th>API Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{range .ReportList}}
+    <tr>
+        <td>{{.FileName}}</td>
+        <td>{{.APIType}}</td>
+    </tr>
+    {{end}}
+    </tbody>
+</table>
+</body>
+</html>
