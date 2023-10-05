@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"sort"
 	"text/template"
 )
 
@@ -39,6 +40,10 @@ func GenerateHTMLReport(Stats common.APICounter) {
 			return
 		}
 		defer reportFile.Close()
+
+		sort.Slice(common.ReportList, func(i, j int) bool {
+			return common.ReportList[i].APIType < common.ReportList[j].APIType
+		})
 
 		data := ReportData{
 			Counter:    Stats,
