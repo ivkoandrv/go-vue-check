@@ -10,4 +10,5 @@ Check, which files you should migrate to the Composition API from Options API
 
 ## Flags
 `-p` - Project folder, default is current directory where program is executed
+
 `-s` - Source folder, default is `src`
